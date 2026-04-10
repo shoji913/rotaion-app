@@ -162,13 +162,18 @@ headBg.style.cssText = `position:relative;width:${CONFIG.DISPLAY_SLOTS * cwH}px;
 
 for (let s = 0; s < CONFIG.DISPLAY_SLOTS; s++) {
   const line = document.createElement('div');
-  line.style.cssText = `position:absolute;left:${s * cwH}px;width:${cwH}px;top:0;bottom:0;border-right:1px solid ${s % 2 === 0 ? 'var(--border2)' : 'var(--border)'};box-sizing:border-box;`;
-  if (s % 2 === 0) {
-    const timeLabel = document.createElement('span');
-    timeLabel.style.cssText = 'position:absolute;bottom:2px;left:2px;font-size:9px;font-weight:600;color:var(--text3);';
+  const isHour = s % 2 === 0;
+  line.style.cssText = `position:absolute;left:${s * cwH}px;width:${cwH}px;top:0;bottom:0;border-right:1px ${isHour ? 'solid var(--border2)' : 'dashed var(--border)'};box-sizing:border-box;`;
+  const timeLabel = document.createElement('span');
+  timeLabel.style.cssText = `position:absolute;bottom:2px;left:2px;font-weight:600;color:var(--text3);`;
+  if (isHour) {
+    timeLabel.style.fontSize = '11px';
     timeLabel.textContent = String(s / 2);
-    line.appendChild(timeLabel);
+  } else {
+    timeLabel.style.fontSize = '8px';
+    timeLabel.textContent = '30';
   }
+  line.appendChild(timeLabel);
   headBg.appendChild(line);
 }
     headRow.appendChild(headBg);
